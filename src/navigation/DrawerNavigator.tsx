@@ -9,7 +9,7 @@ const Drawer = createDrawerNavigator();
 export default function DrawerNavigator() {
   return (
     <Drawer.Navigator
-      initialRouteName={ROUTES.HOME}
+      initialRouteName={ROUTES.TAB_NAVIGATION}
       screenOptions={{
         headerShown: false,
         drawerActiveTintColor: Colors.light.primary,
@@ -18,7 +18,7 @@ export default function DrawerNavigator() {
         drawerType: 'front',
       }}
     >
-      <Drawer.Screen name={ROUTES.HOME} component={TabNavigation} />
+      <Drawer.Screen name={ROUTES.TAB_NAVIGATION} component={TabNavigation} />
       <Drawer.Screen name={ROUTES.SUPPORT} component={Support} />
     </Drawer.Navigator>
   );

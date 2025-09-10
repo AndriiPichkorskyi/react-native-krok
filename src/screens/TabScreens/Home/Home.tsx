@@ -79,8 +79,10 @@ export default function Home({ navigation }) {
           colors={[Colors.light.gradientTo, Colors.light.gradientFrom]}
         >
           <View style={styles.tipOfTheDay}>
-            {tipOfTheDayText.map(text => (
-              <ThemedText style={styles.tipText}>{text}</ThemedText>
+            {tipOfTheDayText.map((text, i) => (
+              <ThemedText style={styles.tipText} key={i}>
+                {text}
+              </ThemedText>
             ))}
           </View>
         </LinearGradient>

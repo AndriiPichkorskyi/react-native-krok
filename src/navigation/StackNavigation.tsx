@@ -24,7 +24,7 @@ export function StackNavigation() {
         <Stack.Screen
           name={ROUTES.SIGN_UP}
           component={SingUp}
-          options={{ title: ROUTES.SIGN_UP }}
+          options={{ title: ROUTES.SIGN_UP, headerShown: false }}
         />
         <Stack.Screen
           name={ROUTES.ERROR_SCREEN}

@@ -1,13 +1,18 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import React from 'react';
 import { ThemedText } from '../../../components/ThemedText';
 import ThemedView from '../../../components/ThemedView/ThemedView';
 
-export default function Support({}) {
+import { Header } from '../../../components/Header/Header';
+
+export default function Support({ navigation }) {
   return (
-    <ThemedView style={styles.containter}>
-      <ThemedText type="h1">Support Content Here</ThemedText>
-    </ThemedView>
+    <View>
+      <Header navigation={navigation} />
+      <ThemedView style={styles.containter}>
+        <ThemedText type="h1">Support Content Here</ThemedText>
+      </ThemedView>
+    </View>
   );
 }
 

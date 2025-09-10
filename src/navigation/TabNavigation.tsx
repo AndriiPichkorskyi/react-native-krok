@@ -38,7 +38,7 @@ export default function TabNavigation() {
       <Tab.Screen
         name={ROUTES.HOME}
         component={Home}
-        options={{ title: ROUTES.TAB_NAVIGATION, headerShown: false }}
+        options={{ title: ROUTES.HOME, headerShown: false }}
       />
       <Tab.Screen name={ROUTES.STATISTICS} component={Statistics} />
       <Tab.Screen name={ROUTES.CHALLENGE} component={Challenge} />
