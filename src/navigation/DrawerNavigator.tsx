@@ -14,6 +14,8 @@ export default function DrawerNavigator() {
         headerShown: false,
         drawerActiveTintColor: Colors.light.primary,
         drawerActiveBackgroundColor: Colors.light.gradientFrom + '22',
+        drawerPosition: 'right',
+        drawerType: 'front',
       }}
     >
       <Drawer.Screen name={ROUTES.HOME} component={TabNavigation} />

@@ -3,6 +3,7 @@ import {
   StyleSheet,
   type TextInputChangeEvent,
   TouchableOpacity,
+  ScrollView,
 } from 'react-native';
 import React, { useState } from 'react';
 import { ThemedText } from '../../components/ThemedText';
@@ -61,54 +62,55 @@ export default function SingUp() {
 
   return (
     <ThemedView style={styles.containter}>
-      <ThemedText type="h1" style={styles.title}>
-        {mode}
-      </ThemedText>
+      <ScrollView>
+        <ThemedText type="h1" style={styles.title}>
+          {mode}
+        </ThemedText>
 
-      {/* Tabs here */}
-      <View style={styles.tabs}>
-        {/* <ThemedButton type="primary" title={TabPage} />
-        <ThemedButton type="secondary" title={TabPage} /> */}
-        <TouchableOpacity onPress={changeMode}>
-          <ThemedText style={tabStyles(mods.registration)}>
-            {mods.registration}
-          </ThemedText>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={changeMode}>
-          <ThemedText style={tabStyles(mods.signin)}>{mods.signin}</ThemedText>
-        </TouchableOpacity>
-      </View>
-
-      <View style={styles.inputsContainer}>
-        <ThemedInput
-          onChange={onChangeInputEmail}
-          placeholder="Email"
-          title="Ваш Email"
-          value={email}
-        />
-        <ThemedInput
-          onChange={onChangeInputPassword}
-          placeholder="password"
-          type="password"
-          title="Пароль"
-          value={password}
-        />
-      </View>
-
-      <View style={styles.bottomContainer}>
-        <ThemedButton
-          style={styles.button}
-          title={mode}
-          onPress={handleSignUp}
-        ></ThemedButton>
-        <ThemedText>або за допомогою</ThemedText>
-        {/* <ThemedText>{name + ' ' + password}</ThemedText> */}
-        <View style={styles.socials}>
-          <SocialIcon icon="facebook" />
-          <SocialIcon icon="google" />
-          <SocialIcon icon="apple" />
+        <View style={styles.tabs}>
+          <TouchableOpacity onPress={changeMode}>
+            <ThemedText style={tabStyles(mods.registration)}>
+              {mods.registration}
+            </ThemedText>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={changeMode}>
+            <ThemedText style={tabStyles(mods.signin)}>
+              {mods.signin}
+            </ThemedText>
+          </TouchableOpacity>
         </View>
-      </View>
+
+        <View style={styles.inputsContainer}>
+          <ThemedInput
+            onChange={onChangeInputEmail}
+            placeholder="Email"
+            title="Ваш Email"
+            value={email}
+          />
+          <ThemedInput
+            onChange={onChangeInputPassword}
+            placeholder="password"
+            type="password"
+            title="Пароль"
+            value={password}
+          />
+        </View>
+
+        <View style={styles.bottomContainer}>
+          <ThemedButton
+            style={styles.button}
+            title={mode}
+            onPress={handleSignUp}
+          ></ThemedButton>
+          <ThemedText>або за допомогою</ThemedText>
+          {/* <ThemedText>{name + ' ' + password}</ThemedText> */}
+          <View style={styles.socials}>
+            <SocialIcon icon="facebook" />
+            <SocialIcon icon="google" />
+            <SocialIcon icon="apple" />
+          </View>
+        </View>
+      </ScrollView>
     </ThemedView>
   );
 }

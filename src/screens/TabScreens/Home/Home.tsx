@@ -12,7 +12,7 @@ import FontAwesome5 from '@react-native-vector-icons/fontawesome5';
 import { Colors } from '../../../constants/Colors';
 import LinearGradient from 'react-native-linear-gradient';
 
-export default function Home({}) {
+export default function Home({ navigation }) {
   const width = Dimensions.get('window').width - 32;
 
   const todaysStatistic = [
@@ -42,7 +42,7 @@ export default function Home({}) {
 
   return (
     <View>
-      <Header />
+      <Header navigation={navigation} />
       <ThemedView style={styles.containter}>
         <View style={styles.chartContainer}>
           <ProgressChartComponent

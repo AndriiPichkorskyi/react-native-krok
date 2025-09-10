@@ -1,11 +1,13 @@
-import { View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import { Image, StyleSheet } from 'react-native';
 import { ThemedText } from '../ThemedText';
 import { Colors } from '../../constants/Colors';
-import Ionicons from '@react-native-vector-icons/ionicons';
+import FontAwesome5 from '@react-native-vector-icons/fontawesome5';
 // IonIcons
 
-export function Header({ name = 'John' }) {
+export function Header({ name = 'John', navigation }) {
+  const toggleMenu = () => navigation.toggleDrawer();
+
   return (
     <View style={styles.header}>
       {/* Left side with image and text */}
@@ -27,11 +29,15 @@ export function Header({ name = 'John' }) {
 
       {/* Right side with notification icon */}
       <View style={styles.containerNotification}>
-        <Ionicons
-          name="notifications-outline"
-          size={30}
-          color={Colors.light.text}
-        />
+        <FontAwesome5 name="bell" size={30} color={Colors.light.text} />
+        <TouchableOpacity onPress={toggleMenu}>
+          <FontAwesome5
+            name="bars"
+            size={30}
+            color={Colors.light.primary}
+            iconStyle="solid"
+          />
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -71,9 +77,8 @@ const styles = StyleSheet.create({
     borderRadius: 90,
   },
   containerNotification: {
-    // backgroundColor: "lime",
-    width: 40,
+    flexDirection: 'row',
+    gap: 32,
     height: 40,
-    backgroundColor: 'orangeß',
   },
 });

@@ -3,6 +3,7 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import Ionicons from '@react-native-vector-icons/ionicons';
 import { Colors } from '../../constants/Colors';
+import FontAwesome5 from '@react-native-vector-icons/fontawesome5';
 
 export type SocialIconProps = {
   icon?: 'google' | 'facebook' | 'apple';
@@ -11,9 +12,9 @@ export type SocialIconProps = {
 
 // ION Icons pack:
 const iconNames = {
-  facebook: 'logo-facebook',
-  google: 'logo-google',
-  apple: 'logo-apple',
+  facebook: 'facebook-f',
+  google: 'google',
+  apple: 'apple',
 };
 
 export default function SocialIcon({
@@ -24,7 +25,12 @@ export default function SocialIcon({
   const iconName = iconNames[icon];
   return (
     <View style={{ ...styles.item, ...style }} {...props}>
-      <Ionicons name={iconName} size={20} color={Colors.light.text} />
+      <FontAwesome5
+        name={iconName}
+        size={20}
+        color={Colors.light.text}
+        iconStyle="brand"
+      />
     </View>
   );
 }

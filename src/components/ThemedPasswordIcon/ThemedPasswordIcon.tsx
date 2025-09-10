@@ -1,10 +1,10 @@
-import Ionicons from '@react-native-vector-icons/ionicons';
 import {
   type GestureResponderEvent,
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
 import { Colors } from '../../constants/Colors';
+import FontAwesome5 from '@react-native-vector-icons/fontawesome5';
 
 export type ThemedPasswordIconIconProps = {
   isOn: Boolean;
@@ -15,10 +15,15 @@ export function ThemedPasswordIcon({
   isOn,
   onPress,
 }: ThemedPasswordIconIconProps) {
-  const iconName = isOn ? 'lock-open-outline' : 'lock-closed';
+  const iconName = isOn ? 'unlock' : 'lock';
   return (
     <TouchableOpacity onPress={onPress} style={styles.button}>
-      <Ionicons name={iconName} size={20} color={Colors.light.text} />
+      <FontAwesome5
+        name={iconName}
+        size={20}
+        color={Colors.light.text}
+        iconStyle="solid"
+      />
     </TouchableOpacity>
   );
 }
