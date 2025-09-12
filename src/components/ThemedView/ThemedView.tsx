@@ -6,10 +6,10 @@ import {
 } from 'react-native';
 
 export default function ThemedView(props: ViewProps) {
-  const style123 = props.style || {};
+  const propStyle = props.style || {};
   return (
     <ImageBackground source={require('../../assets/backgroundGlow.png')}>
-      <View {...props} style={Object.assign({}, styles.container, style123)}>
+      <View {...props} style={Object.assign({}, styles.container, propStyle)}>
         {props.children}
       </View>
     </ImageBackground>
@@ -18,7 +18,7 @@ export default function ThemedView(props: ViewProps) {
 
 const styles = StyleSheet.create({
   container: {
-    height: '100%',
+    paddingVertical: 64,
     paddingHorizontal: 16,
   },
 });

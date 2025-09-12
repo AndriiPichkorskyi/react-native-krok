@@ -5,6 +5,7 @@ import ROUTES from '../constants/routes';
 import { Colors } from '../constants/Colors';
 import errorScreen from '../screens/ErrorScreen';
 import DrawerNavigator from './DrawerNavigator';
+import UserScreen from '../screens/TabScreens/UserScreen';
 
 const Stack = createStackNavigator();
 
@@ -20,7 +21,13 @@ const MyTheme = {
 export function StackNavigation() {
   return (
     <NavigationContainer theme={MyTheme}>
-      <Stack.Navigator initialRouteName={ROUTES.SIGN_UP}>
+      <Stack.Navigator
+        initialRouteName={ROUTES.SIGN_UP}
+        screenOptions={{
+          headerTintColor: Colors.light.primary,
+          headerBackTitleStyle: { color: Colors.light.primary },
+        }}
+      >
         <Stack.Screen
           name={ROUTES.SIGN_UP}
           component={SingUp}
@@ -35,6 +42,15 @@ export function StackNavigation() {
           name={ROUTES.DRAWER}
           component={DrawerNavigator}
           options={{ title: ROUTES.DRAWER, headerShown: false }}
+        />
+        <Stack.Screen
+          name={ROUTES.USER_SCREEN}
+          component={UserScreen}
+          options={{
+            title: '',
+            headerShown: true,
+            headerBackTitle: 'Повернутися',
+          }}
         />
       </Stack.Navigator>
     </NavigationContainer>

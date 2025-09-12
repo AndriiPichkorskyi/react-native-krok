@@ -118,7 +118,7 @@ export default function SingUp() {
 const styles = StyleSheet.create({
   containter: {
     justifyContent: 'space-between',
-    paddingVertical: 32,
+    paddingVertical: 64,
   },
   title: {
     textAlign: 'center',

@@ -8,6 +8,8 @@ const ROUTES = {
   CHALLENGE: 'Challenge',
   SETTINGS: 'Settings',
   SUPPORT: 'Support',
+  LEADERBOARDS: 'Leaderboards',
+  USER_SCREEN: 'UserScreen',
 };
 
 export default ROUTES;

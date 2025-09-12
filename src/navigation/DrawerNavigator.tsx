@@ -3,6 +3,7 @@ import ROUTES from '../constants/routes';
 import Support from '../screens/TabScreens/Support';
 import TabNavigation from './TabNavigation';
 import { Colors } from '../constants/Colors';
+import Leaderboards from '../screens/TabScreens/Leaderboards';
 
 const Drawer = createDrawerNavigator();
 
@@ -20,6 +21,7 @@ export default function DrawerNavigator() {
     >
       <Drawer.Screen name={ROUTES.TAB_NAVIGATION} component={TabNavigation} />
       <Drawer.Screen name={ROUTES.SUPPORT} component={Support} />
+      <Drawer.Screen name={ROUTES.LEADERBOARDS} component={Leaderboards} />
     </Drawer.Navigator>
   );
 }
