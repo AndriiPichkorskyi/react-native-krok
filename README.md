@@ -2,4 +2,4 @@
 
 ## Demonstrating how the list and navigation work in the application
 
-<img src="src/assets/readme/Sdemonstration.gif">
+<img src="src/assets/readme/demonstration.gif">
