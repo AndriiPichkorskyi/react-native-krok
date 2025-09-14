@@ -7,12 +7,12 @@ import { Header } from '../../../components/Header/Header';
 
 export default function Support({ navigation }) {
   return (
-    <View>
+    <>
       <Header navigation={navigation} />
       <ThemedView style={styles.containter}>
         <ThemedText type="h1">Support Content Here</ThemedText>
       </ThemedView>
-    </View>
+    </>
   );
 }
 

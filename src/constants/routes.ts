@@ -10,6 +10,8 @@ const ROUTES = {
   SUPPORT: 'Support',
   LEADERBOARDS: 'Leaderboards',
   USER_SCREEN: 'UserScreen',
+  PLANS: 'Plans',
+  ROUTE_SCREEN: 'RoutesScreen',
 };
 
 export default ROUTES;

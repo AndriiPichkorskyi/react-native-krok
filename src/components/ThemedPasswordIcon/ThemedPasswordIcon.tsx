@@ -33,6 +33,5 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 16,
     top: 36,
-    // bac
   },
 });

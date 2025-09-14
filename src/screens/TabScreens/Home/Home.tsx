@@ -11,6 +11,7 @@ import {
 import FontAwesome5 from '@react-native-vector-icons/fontawesome5';
 import { Colors } from '../../../constants/Colors';
 import LinearGradient from 'react-native-linear-gradient';
+import ProgressDayChart from '../../../components/Charts/ProgressDayChart';
 
 export default function Home({ navigation }) {
   const width = Dimensions.get('window').width - 32;
@@ -41,22 +42,10 @@ export default function Home({ navigation }) {
   ];
 
   return (
-    <View>
+    <View style={styles.containter}>
       <Header navigation={navigation} />
-      <ThemedView style={styles.containter}>
-        <View style={styles.chartContainer}>
-          <ProgressChartComponent
-            progress={0.62}
-            style={styles.chartComponent}
-          />
-          <View style={styles.chartText}>
-            <ThemedText type="h2" style={styles.chartTextValue}>
-              6,162
-            </ThemedText>
-            <ThemedText>з 10 000 кроків</ThemedText>
-            <ThemedText>62% завершено</ThemedText>
-          </View>
-        </View>
+      <ThemedView>
+        <ProgressDayChart />
         <View style={styles.todayStatistic}>
           {todaysStatistic.map(({ icon, value, title }) => (
             <View style={styles.todayStatisticItem} key={title}>
@@ -93,25 +82,7 @@ export default function Home({ navigation }) {
 
 const styles = StyleSheet.create({
   containter: {
-    paddingVertical: 24,
-    justifyContent: 'flex-start',
-  },
-  chartContainer: {
-    height: 200,
-    width: '100%',
-  },
-  chartComponent: {
-    position: 'absolute',
-    alignSelf: 'center',
-  },
-  chartTextValue: {
-    fontSize: 32,
-  },
-  chartText: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    gap: 4,
-    flex: 1,
+    height: '100%',
   },
   todayStatistic: {
     marginTop: 24,

@@ -1,4 +1,4 @@
-export const Colors = {
+export const Colors: { [key: string]: colorScheme } = {
   light: {
     text: '#000',
     textSecondary: '#fff',
@@ -7,6 +7,8 @@ export const Colors = {
     inputBG: '#FFF',
     gradientFrom: '#0A6562',
     gradientTo: '#14CBC5',
+    borderColor: '#56565680',
+    borderWidth: 1,
   },
   dark: {
     text: '#FFF',
@@ -16,5 +18,19 @@ export const Colors = {
     inputBG: '#000',
     gradientFrom: '#0A6562',
     gradientTo: '#14CBC5',
+    borderColor: '#E5E7EB',
+    borderWidth: 1,
   },
+};
+
+export type colorScheme = {
+  text: string;
+  textSecondary: string;
+  background: string;
+  primary: string;
+  inputBG: string;
+  gradientFrom: string;
+  gradientTo: string;
+  borderColor: string;
+  borderWidth: number;
 };

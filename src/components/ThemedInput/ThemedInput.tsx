@@ -5,6 +5,12 @@ import { ThemedText } from '../ThemedText';
 import { ThemedPasswordIcon } from '../ThemedPasswordIcon';
 import { Colors } from '../../constants/Colors';
 
+import { useContext } from 'react';
+import {
+  ThemeContext,
+  themeContextType,
+} from '../../context/theme/ThemeContext';
+
 export type ThemedInputProps = TextInputProps & {
   title?: string;
   type?: 'text' | 'password';
@@ -20,6 +26,8 @@ export function ThemedInput({
   onChange,
   value,
 }: ThemedInputProps) {
+  const { colorScheme } = useContext(ThemeContext) as themeContextType;
+
   const [showPassword, setSetshowPassword] = useState(false);
   const handlePasswordClick = () => setSetshowPassword(!showPassword);
 
@@ -30,7 +38,7 @@ export function ThemedInput({
         underlineColorAndroid="transparent"
         placeholderTextColor="#808080"
         placeholder={placeholder}
-        style={styles.input}
+        style={styles(colorScheme).input}
         secureTextEntry={type === 'password' && !showPassword}
         onChangeText={onChange}
         value={value}
@@ -42,15 +50,17 @@ export function ThemedInput({
   );
 }
 
-const styles = StyleSheet.create({
-  input: {
-    position: 'relative',
-    marginTop: 6,
-    borderRadius: 10,
-    borderColor: '#D8DADC',
-    borderWidth: 1,
-    paddingHorizontal: 18,
-    paddingVertical: 16,
-    backgroundColor: Colors.light.inputBG,
-  },
-});
+const styles = theme =>
+  StyleSheet.create({
+    input: {
+      position: 'relative',
+      marginTop: 6,
+      borderRadius: 10,
+      borderColor: theme.borderColor,
+      borderWidth: 1,
+      paddingHorizontal: 18,
+      paddingVertical: 16,
+      backgroundColor: theme.inputBG,
+      color: theme.text,
+    },
+  });

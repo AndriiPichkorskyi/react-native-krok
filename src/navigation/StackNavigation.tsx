@@ -5,20 +5,24 @@ import ROUTES from '../constants/routes';
 import { Colors } from '../constants/Colors';
 import errorScreen from '../screens/ErrorScreen';
 import DrawerNavigator from './DrawerNavigator';
-import UserScreen from '../screens/TabScreens/UserScreen';
+import UserScreen from '../screens/DrawerScreens/UserScreen';
+import { useContext } from 'react';
+import { ThemeContext } from '../context/theme/ThemeContext';
 
 const Stack = createStackNavigator();
 
-const MyTheme = {
-  ...DefaultTheme,
-
-  colors: {
-    ...DefaultTheme.colors,
-    background: Colors.light.background,
-  },
-};
-
 export function StackNavigation() {
+  const { colorScheme } = useContext(ThemeContext);
+
+  const MyTheme = {
+    ...DefaultTheme,
+
+    colors: {
+      ...DefaultTheme.colors,
+      background: colorScheme.background,
+    },
+  };
+
   return (
     <NavigationContainer theme={MyTheme}>
       <Stack.Navigator
@@ -26,6 +30,9 @@ export function StackNavigation() {
         screenOptions={{
           headerTintColor: Colors.light.primary,
           headerBackTitleStyle: { color: Colors.light.primary },
+          headerStyle: {
+            backgroundColor: colorScheme.inputBG,
+          },
         }}
       >
         <Stack.Screen

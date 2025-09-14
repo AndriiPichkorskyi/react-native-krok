@@ -6,15 +6,17 @@ import Challenge from '../screens/TabScreens/Challenge';
 import SettingsScreen from '../screens/TabScreens/SettingsScreen';
 import FontAwesome5 from '@react-native-vector-icons/fontawesome5';
 import { Colors } from '../constants/Colors';
+import { useContext } from 'react';
+import { ThemeContext, themeContextType } from '../context/theme/ThemeContext';
 
 const Tab = createBottomTabNavigator();
 
 export default function TabNavigation() {
+  const { colorScheme } = useContext(ThemeContext) as themeContextType;
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
-          // const iconStyle = focused ? 'solid' : 'solid';
           const icons = {
             [ROUTES.HOME]: 'home',
             [ROUTES.STATISTICS]: 'chart-line',
@@ -31,8 +33,14 @@ export default function TabNavigation() {
             />
           );
         },
-        tabBarActiveTintColor: Colors.light.primary,
-        tabBarInactiveTintColor: Colors.light.text,
+        tabBarActiveTintColor: colorScheme.primary,
+        tabBarInactiveTintColor: colorScheme.text,
+        tabBarActiveBackgroundColor: colorScheme.inputBG,
+        tabBarInactiveBackgroundColor: colorScheme.inputBG,
+        headerStyle: {
+          backgroundColor: colorScheme.inputBG,
+        },
+        headerTintColor: colorScheme.text,
       })}
     >
       <Tab.Screen

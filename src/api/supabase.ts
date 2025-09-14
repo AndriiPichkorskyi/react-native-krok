@@ -14,6 +14,7 @@ const instance = axios.create({
   headers: {
     apikey: SUPABASE_ANON_KEY,
   },
+  timeout: 10_000, // 10 seconds
 });
 
 export type UserType = {
@@ -28,18 +29,18 @@ export type UserType = {
 };
 
 export async function getUsers({ limit = 100 }): Promise<UserType[]> {
-  const responsse = await instance.get('rest/v1/User', {
+  const response = await instance.get('rest/v1/User', {
     params: {
       select: '*',
       limit: limit,
     },
   });
 
-  return responsse.data;
+  return response.data;
 }
 
 export async function getLeaderBoard({ limit = 100 }): Promise<UserType[]> {
-  const responsse = await instance.get('rest/v1/User', {
+  const response = await instance.get('rest/v1/User', {
     params: {
       select: '*',
       limit: limit,
@@ -47,19 +48,19 @@ export async function getLeaderBoard({ limit = 100 }): Promise<UserType[]> {
     },
   });
 
-  return responsse.data;
+  return response.data;
 }
 
 export async function getUserByID(id: number): Promise<UserType> {
-  const responsse = await instance.get('rest/v1/User', {
+  const response = await instance.get('rest/v1/User', {
     params: {
       select: '*',
       limit: 1,
       id: 'eq.' + id,
     },
   });
-  console.log(responsse);
-  return responsse.data[0];
+  console.log(response);
+  return response.data[0];
 }
 
 const api = {

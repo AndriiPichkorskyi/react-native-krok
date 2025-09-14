@@ -3,9 +3,16 @@ import { Image, StyleSheet } from 'react-native';
 import { ThemedText } from '../ThemedText';
 import { Colors } from '../../constants/Colors';
 import FontAwesome5 from '@react-native-vector-icons/fontawesome5';
+import { useContext } from 'react';
+import {
+  ThemeContext,
+  themeContextType,
+} from '../../context/theme/ThemeContext';
 // IonIcons
 
 export function Header({ name = 'John', navigation }) {
+  const { colorScheme } = useContext(ThemeContext) as themeContextType;
+
   const toggleMenu = () => navigation.toggleDrawer();
 
   return (
@@ -29,12 +36,12 @@ export function Header({ name = 'John', navigation }) {
 
       {/* Right side with notification icon */}
       <View style={styles.containerNotification}>
-        <FontAwesome5 name="bell" size={30} color={Colors.light.text} />
+        <FontAwesome5 name="bell" size={30} color={colorScheme.text} />
         <TouchableOpacity onPress={toggleMenu}>
           <FontAwesome5
             name="bars"
             size={30}
-            color={Colors.light.primary}
+            color={colorScheme.primary}
             iconStyle="solid"
           />
         </TouchableOpacity>
@@ -50,13 +57,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingHorizontal: 16,
     paddingVertical: 12,
-    // backgroundColor: "tomato"
     borderBottomColor: Colors.light.primary,
     borderBottomWidth: 1,
   },
   user: {
     flexDirection: 'row',
-    // backgroundColor: "green",
     height: '100%',
   },
   userInfo: {
@@ -64,7 +69,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingLeft: 4,
     height: '100%',
-    // backgroundColor: "orange"
   },
   firstLine: {
     flexDirection: 'row',
