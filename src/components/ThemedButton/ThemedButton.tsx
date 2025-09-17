@@ -36,11 +36,7 @@ export function ThemedButton({
   return (
     <TouchableOpacity
       activeOpacity={0.8}
-      style={{
-        ...styles(colorScheme).button,
-        ...styles(colorScheme)[type],
-        ...style,
-      }}
+      style={[styles(colorScheme).button, styles(colorScheme)[type], style]}
       {...props}
     >
       <View>

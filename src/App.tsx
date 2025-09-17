@@ -4,14 +4,25 @@ import { Provider } from 'react-redux';
 import store from './redux/store';
 import { ThemeProvider } from './context/theme/ThemeContext';
 import AppSafeArea from './components/AppContent/AppContent';
+import { UIManager, Platform } from 'react-native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+
+if (
+  Platform.OS === 'android' &&
+  UIManager.setLayoutAnimationEnabledExperimental
+) {
+  UIManager.setLayoutAnimationEnabledExperimental(true);
+}
 
 function App() {
   return (
     <Provider store={store}>
       <ThemeProvider>
-        <AppSafeArea>
-          <StackNavigation />
-        </AppSafeArea>
+        <GestureHandlerRootView>
+          <AppSafeArea>
+            <StackNavigation />
+          </AppSafeArea>
+        </GestureHandlerRootView>
       </ThemeProvider>
     </Provider>
   );

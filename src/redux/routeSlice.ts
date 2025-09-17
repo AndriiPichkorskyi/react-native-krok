@@ -1,9 +1,10 @@
 import { createSelector, createSlice } from '@reduxjs/toolkit';
+import { randomID } from '../helpers/randomID';
 
 const initialState = [
-  { route: 'Ранкова прогулянка 3 км', active: true },
-  { route: 'Обідня прогулянка 3 км', active: true },
-  { route: 'Вечірня прогулянка 2 км', active: true },
+  { route: 'Ранкова прогулянка 3 км', active: true, id: randomID() },
+  { route: 'Обідня прогулянка 3 км', active: true, id: randomID() },
+  { route: 'Вечірня прогулянка 2 км', active: true, id: randomID() },
 ];
 
 const routeSlice = createSlice({
@@ -11,7 +12,7 @@ const routeSlice = createSlice({
   initialState: initialState,
   reducers: {
     addRoute: state => {
-      state.push({ route: '', active: true });
+      state.push({ route: '', active: true, id: randomID() });
     },
     deleteRoute: (state, { payload }) => {
       return state.filter((_, i) => payload.index !== i);

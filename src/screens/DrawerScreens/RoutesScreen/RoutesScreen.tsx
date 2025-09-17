@@ -1,4 +1,4 @@
-import { View, StyleSheet, Dimensions, ScrollView } from 'react-native';
+import { View, StyleSheet, Dimensions, ScrollView, Button } from 'react-native';
 import React from 'react';
 import { ThemedText } from '../../../components/ThemedText';
 import ThemedView from '../../../components/ThemedView/ThemedView';
@@ -12,15 +12,15 @@ export default function Plans({ navigation }) {
   return (
     <View style={styles.containter}>
       <Header navigation={navigation} />
-      <ThemedView>
-        <ScrollView>
-          <ThemedText type="h1">Список маршрутів</ThemedText>
-          <ThemedText style={styles.subTitle}>Мої цілі</ThemedText>
+      <ThemedView style={{ paddingHorizontal: 0 }}>
+        {/* <ScrollView> */}
+        <ThemedText type="h1">Список маршрутів</ThemedText>
+        <ThemedText style={styles.subTitle}>Мої цілі</ThemedText>
 
-          <View style={styles.planForm}>
-            <RouteForm />
-          </View>
-        </ScrollView>
+        <View style={styles.planForm}>
+          <RouteForm />
+        </View>
+        {/* </ScrollView> */}
       </ThemedView>
     </View>
   );
@@ -41,6 +41,7 @@ const styles = StyleSheet.create({
   },
   planForm: {
     marginTop: 32,
+    // flex: 1,
   },
   todayStatistic: {
     marginTop: 24,
@@ -68,5 +69,10 @@ const styles = StyleSheet.create({
   },
   tipText: {
     color: Colors.light.textSecondary,
+  },
+  circle: {
+    height: 120,
+    width: 120,
+    borderRadius: 500,
   },
 });

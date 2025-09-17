@@ -1,5 +1,5 @@
 import { View, StyleSheet, Dimensions } from 'react-native';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ThemedText } from '../../../components/ThemedText';
 import ThemedView from '../../../components/ThemedView/ThemedView';
 import { Header } from '../../../components/Header/Header';
@@ -12,9 +12,19 @@ import FontAwesome5 from '@react-native-vector-icons/fontawesome5';
 import { Colors } from '../../../constants/Colors';
 import LinearGradient from 'react-native-linear-gradient';
 import ProgressDayChart from '../../../components/Charts/ProgressDayChart';
+import Animated, {
+  useSharedValue,
+  withDelay,
+  withSpring,
+} from 'react-native-reanimated';
 
 export default function Home({ navigation }) {
   const width = Dimensions.get('window').width - 32;
+
+  const animation = useSharedValue(200);
+  useEffect(() => {
+    animation.value = withDelay(500, withSpring(0));
+  }, []);
 
   const todaysStatistic = [
     {
@@ -63,18 +73,24 @@ export default function Home({ navigation }) {
           ))}
         </View>
         <LineChartComponent width={width} style={styles.weekChart} />
-        <LinearGradient
-          style={styles.tipWrapper}
-          colors={[Colors.light.gradientTo, Colors.light.gradientFrom]}
+        <Animated.View
+          style={{
+            transform: [{ translateY: animation }],
+          }}
         >
-          <View style={styles.tipOfTheDay}>
-            {tipOfTheDayText.map((text, i) => (
-              <ThemedText style={styles.tipText} key={i}>
-                {text}
-              </ThemedText>
-            ))}
-          </View>
-        </LinearGradient>
+          <LinearGradient
+            style={styles.tipWrapper}
+            colors={[Colors.light.gradientTo, Colors.light.gradientFrom]}
+          >
+            <View style={styles.tipOfTheDay}>
+              {tipOfTheDayText.map((text, i) => (
+                <ThemedText style={styles.tipText} key={i}>
+                  {text}
+                </ThemedText>
+              ))}
+            </View>
+          </LinearGradient>
+        </Animated.View>
       </ThemedView>
     </View>
   );

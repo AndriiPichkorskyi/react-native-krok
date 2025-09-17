@@ -59,7 +59,7 @@ export async function getUserByID(id: number): Promise<UserType> {
       id: 'eq.' + id,
     },
   });
-  console.log(response);
+  // console.log(response);
   return response.data[0];
 }
 

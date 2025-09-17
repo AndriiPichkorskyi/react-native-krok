@@ -1,6 +1,8 @@
 import { StyleSheet, View } from 'react-native';
 import ProgressChartComponent from './Parts/ProgressChartComponent';
 import { ThemedText } from '../ThemedText';
+import { useEffect } from 'react';
+import Animated, { useSharedValue, withTiming } from 'react-native-reanimated';
 
 export default function ProgressDayChart({
   goal = 10_000,
@@ -10,6 +12,7 @@ export default function ProgressDayChart({
   const stepsText = steps.toLocaleString('en-US');
   const percentProgress = steps / goal;
   const percentText = (percentProgress * 100).toFixed(0);
+
   return (
     <View style={[styles.chartContainer, style]}>
       <ProgressChartComponent

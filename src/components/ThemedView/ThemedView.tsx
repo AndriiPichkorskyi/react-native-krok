@@ -12,7 +12,7 @@ export default function ThemedView(props: ViewProps) {
       source={require('../../assets/backgroundGlow.png')}
       style={styles.backgroundContainer}
     >
-      <View {...props} style={Object.assign({}, styles.container, propStyle)}>
+      <View {...props} style={[styles.container, propStyle]}>
         {props.children}
       </View>
     </ImageBackground>
@@ -26,5 +26,7 @@ const styles = StyleSheet.create({
   container: {
     paddingVertical: 24,
     paddingHorizontal: 16,
+    overflow: 'visible',
+    flex: 1,
   },
 });

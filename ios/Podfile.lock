@@ -1838,7 +1838,6 @@ PODS:
     - SocketRocket
     - Yoga
   - react-native-vector-icons-fontawesome5 (12.2.0)
-  - react-native-vector-icons-ionicons (12.3.0)
   - React-NativeModulesApple (0.81.1):
     - boost
     - DoubleConversion
@@ -2773,7 +2772,6 @@ DEPENDENCIES:
   - React-microtasksnativemodule (from `../node_modules/react-native/ReactCommon/react/nativemodule/microtasks`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - "react-native-vector-icons-fontawesome5 (from `../node_modules/@react-native-vector-icons/fontawesome5`)"
-  - "react-native-vector-icons-ionicons (from `../node_modules/@react-native-vector-icons/ionicons`)"
   - React-NativeModulesApple (from `../node_modules/react-native/ReactCommon/react/nativemodule/core/platform/ios`)
   - React-oscompat (from `../node_modules/react-native/ReactCommon/oscompat`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
@@ -2906,8 +2904,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-safe-area-context"
   react-native-vector-icons-fontawesome5:
     :path: "../node_modules/@react-native-vector-icons/fontawesome5"
-  react-native-vector-icons-ionicons:
-    :path: "../node_modules/@react-native-vector-icons/ionicons"
   React-NativeModulesApple:
     :path: "../node_modules/react-native/ReactCommon/react/nativemodule/core/platform/ios"
   React-oscompat:
@@ -3029,7 +3025,6 @@ SPEC CHECKSUMS:
   React-microtasksnativemodule: b0fb3f97372df39bda3e657536039f1af227cc29
   react-native-safe-area-context: 6d8a7b750e496e37bda47c938320bf2c734d441f
   react-native-vector-icons-fontawesome5: 1199fa2cf3323fac0b9b52b2aecb1329aa3602a5
-  react-native-vector-icons-ionicons: ad07e944a092a5cf71b8b569d8f5ce2bf674c415
   React-NativeModulesApple: 9ec9240159974c94886ebbe4caec18e3395f6aef
   React-oscompat: b12c633e9c00f1f99467b1e0e0b8038895dae436
   React-perflogger: ccf4fd2664b00818645e588623c7531a8b32d114
