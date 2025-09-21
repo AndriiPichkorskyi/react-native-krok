@@ -49,9 +49,9 @@ export default function Leaderboards() {
     getUsers();
   }, []);
 
-  const onItemClick = id => {
+  const onItemClick = useCallback(id => {
     navigation.navigate(ROUTES.USER_SCREEN, { id });
-  };
+  }, []);
 
   const renderUser = useCallback(
     ({ item, index }: { item: ProfileType; index: number }) => (

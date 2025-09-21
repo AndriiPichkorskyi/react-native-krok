@@ -16,7 +16,7 @@ const ThemeSwitcher = () => {
 
   return (
     <View style={styles.container}>
-      <ThemedText>Theme is {theme}</ThemedText>
+      <ThemedText>Тема {theme === 'light' ? 'Світла' : 'Темна'}</ThemedText>
       <Switch
         trackColor={{
           false: Colors.light.background,

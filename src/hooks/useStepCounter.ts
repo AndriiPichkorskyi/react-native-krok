@@ -17,6 +17,8 @@ export default function useStepCounter() {
   const user = useSelector((state: RootState) => state.user);
   const lastAcceleration = useRef(0);
   const subscriptionRef = useRef<any>(null);
+  const lastStepTime = useRef(0);
+  const stepHistory = useRef<number[]>([]);
 
   // Ініціалізація кроків після того як user з'явився
   useEffect(() => {
@@ -27,9 +29,44 @@ export default function useStepCounter() {
       .pipe(
         map(({ x, y, z }) => Math.sqrt(x * x + y * y + z * z)),
         filter(acc => {
+          const now = Date.now();
           const diff = Math.abs(acc - lastAcceleration.current);
+
+          // Фільтрація за часом - мінімум 300мс між кроками
+          if (now - lastStepTime.current < 300) {
+            lastAcceleration.current = acc;
+            return false;
+          }
+
+          // Фільтрація за силою прискорення - підвищуємо поріг
+          if (diff < 2.5) {
+            lastAcceleration.current = acc;
+            return false;
+          }
+
+          // Фільтрація за історією - перевіряємо стабільність
+          stepHistory.current.push(acc);
+          if (stepHistory.current.length > 5) {
+            stepHistory.current.shift(); // видаляємо старі значення
+          }
+
+          // Перевіряємо, чи є це справжній крок (варіація в історії)
+          if (stepHistory.current.length >= 3) {
+            const variance = stepHistory.current.reduce((sum, val, idx, arr) => {
+              const mean = arr.reduce((a, b) => a + b) / arr.length;
+              return sum + Math.pow(val - mean, 2);
+            }, 0) / stepHistory.current.length;
+
+            // Якщо варіація надто мала - ймовірно просто тремтіння
+            if (variance < 1.0) {
+              lastAcceleration.current = acc;
+              return false;
+            }
+          }
+
           lastAcceleration.current = acc;
-          return diff > 1.2;
+          lastStepTime.current = now;
+          return true;
         }),
       )
       .subscribe({

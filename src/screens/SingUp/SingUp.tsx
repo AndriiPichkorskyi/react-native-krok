@@ -170,13 +170,14 @@ export default function SingUp() {
             title={mode}
             onPress={handleAuth}
           ></ThemedButton>
-          <ThemedText>або за допомогою</ThemedText>
+          <ThemedText>Авторизація за допомогою</ThemedText>
 
           <View style={themedStyles.socials}>
             <SocialIcon icon="facebook" />
             <SocialIcon icon="google" />
             <SocialIcon icon="apple" />
           </View>
+
           <ThemedText>Буде додана в наступних версіях</ThemedText>
         </View>
       </ScrollView>
@@ -188,7 +189,6 @@ const styles = (theme: colorScheme) =>
   StyleSheet.create({
     containter: {
       justifyContent: 'space-between',
-      paddingVertical: 64,
     },
     title: {
       textAlign: 'center',

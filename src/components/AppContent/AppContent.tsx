@@ -1,6 +1,9 @@
 import React, { useContext, useMemo } from 'react';
-import { StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { StyleSheet, Platform } from 'react-native';
+import {
+  SafeAreaView,
+  useSafeAreaInsets,
+} from 'react-native-safe-area-context';
 import {
   ThemeContext,
   themeContextType,
@@ -16,7 +19,10 @@ export default function AppSafeArea({
   const themedStyles = useMemo(() => styles(colorScheme), [colorScheme]);
 
   return (
-    <SafeAreaView style={themedStyles.appContainer}>
+    <SafeAreaView
+      style={themedStyles.appContainer}
+      edges={['top', 'left', 'right']}
+    >
       {children}
     </SafeAreaView>
   );
