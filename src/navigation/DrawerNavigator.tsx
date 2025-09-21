@@ -34,11 +34,23 @@ export default function DrawerNavigator() {
         },
       }}
     >
-      <Drawer.Screen name={ROUTES.TAB_NAVIGATION} component={TabNavigation} />
-      {/* <Drawer.Screen name={ROUTES.SUPPORT} component={Support} /> */}
-      {/* <Drawer.Screen name={ROUTES.LEADERBOARDS} component={Leaderboards} /> */}
-      <Drawer.Screen name={ROUTES.PLANS} component={Plans} />
-      <Drawer.Screen name={ROUTES.ROUTE_SCREEN} component={RoutesScreen} />
+      <Drawer.Screen
+        name={ROUTES.TAB_NAVIGATION}
+        component={TabNavigation}
+        options={{ drawerLabel: 'Головна', title: 'Головна' }}
+      />
+      {/* <Drawer.Screen name={ROUTES.SUPPORT} component={Support} options={{ drawerLabel: 'Підтримка', title: 'Підтримка' }} /> */}
+      {/* <Drawer.Screen name={ROUTES.LEADERBOARDS} component={Leaderboards} options={{ drawerLabel: 'Лідерборд', title: 'Лідерборд' }} /> */}
+      <Drawer.Screen
+        name={ROUTES.PLANS}
+        component={Plans}
+        options={{ drawerLabel: 'Плани', title: 'Мої плани' }}
+      />
+      <Drawer.Screen
+        name={ROUTES.ROUTE_SCREEN}
+        component={RoutesScreen}
+        options={{ drawerLabel: 'Маршрути', title: 'Мої маршрути' }}
+      />
     </Drawer.Navigator>
   );
 }

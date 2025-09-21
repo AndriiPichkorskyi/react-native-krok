@@ -1,13 +1,12 @@
 import { View, Text, StyleSheet, Image } from 'react-native';
 import React, { useEffect, useState } from 'react';
-import ThemedView from '../../../components/ThemedView/ThemedView';
-import api, { ProfileType, type UserType } from '../../../api/supabase';
+import ThemedView from '../../../components/ThemedView';
+import api, { type ProfileType } from '../../../api/supabase';
 import { useNavigation } from '@react-navigation/core';
 import ROUTES from '../../../constants/routes';
 import { ThemedText } from '../../../components/ThemedText';
 import { Colors } from '../../../constants/Colors';
 import { ThemedButton } from '../../../components/ThemedButton';
-import Loader from '../../../components/Loader';
 import { useLoading } from '../../../context/loaderContext';
 
 export default function UserScreen({ route }) {

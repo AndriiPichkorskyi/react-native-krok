@@ -40,7 +40,7 @@ export function Header({ navigation }) {
         />
         <View style={themedStyles.userInfo}>
           <View style={themedStyles.firstLine}>
-            <ThemedText>Hello! </ThemedText>
+            <ThemedText>Вітаю! </ThemedText>
             <ThemedText color="primary">{username}</ThemedText>
           </View>
           <View style={themedStyles.secondLiine}>

@@ -3,8 +3,12 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-import { Colors } from '../../constants/Colors';
 import FontAwesome5 from '@react-native-vector-icons/fontawesome5';
+import {
+  ThemeContext,
+  themeContextType,
+} from '../../context/theme/ThemeContext';
+import { useContext } from 'react';
 
 export type ThemedPasswordIconIconProps = {
   isOn: Boolean;
@@ -15,13 +19,14 @@ export function ThemedPasswordIcon({
   isOn,
   onPress,
 }: ThemedPasswordIconIconProps) {
+  const { colorScheme } = useContext(ThemeContext) as themeContextType;
   const iconName = isOn ? 'unlock' : 'lock';
   return (
     <TouchableOpacity onPress={onPress} style={styles.button}>
       <FontAwesome5
         name={iconName}
         size={20}
-        color={Colors.light.text}
+        color={colorScheme.primary}
         iconStyle="solid"
       />
     </TouchableOpacity>

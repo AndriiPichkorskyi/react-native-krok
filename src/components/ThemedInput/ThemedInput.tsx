@@ -43,13 +43,10 @@ export function ThemedInput({
     !editable && themedStyles.inputDisable,
   ];
 
-  // const placeholderTextColor = editable ? '#808080' : '#FF0000';
-
   return (
     <View style={themedStyles.constainer}>
       <ThemedText style={titleStyle || undefined}>{title}</ThemedText>
       <TextInput
-        // underlineColorAndroid="transparent"
         placeholder={placeholder}
         style={inputStile}
         secureTextEntry={type === 'password' && !showPassword}

@@ -10,8 +10,8 @@ import { ThemedText } from '../../components/ThemedText';
 import { ThemedInput } from '../../components/ThemedInput';
 import { ThemedButton } from '../../components/ThemedButton';
 import SocialIcon from '../../components/SocialIcon/SocialIcon';
-import ThemedView from '../../components/ThemedView/ThemedView';
-import { Colors, colorScheme } from '../../constants/Colors';
+import ThemedView from '../../components/ThemedView';
+import { colorScheme } from '../../constants/Colors';
 
 import { CommonActions, useNavigation } from '@react-navigation/native';
 import ROUTES from '../../constants/routes';
@@ -171,12 +171,13 @@ export default function SingUp() {
             onPress={handleAuth}
           ></ThemedButton>
           <ThemedText>або за допомогою</ThemedText>
-          {/* <ThemedText>{name + ' ' + password}</ThemedText> */}
+
           <View style={themedStyles.socials}>
             <SocialIcon icon="facebook" />
             <SocialIcon icon="google" />
             <SocialIcon icon="apple" />
           </View>
+          <ThemedText>Буде додана в наступних версіях</ThemedText>
         </View>
       </ScrollView>
     </ThemedView>

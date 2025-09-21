@@ -1,5 +1,5 @@
 import React, { useContext, useMemo } from 'react';
-import { StatusBar, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import {
   ThemeContext,
@@ -12,15 +12,11 @@ export default function AppSafeArea({
 }: {
   children: React.ReactNode;
 }) {
-  const { colorScheme, theme } = useContext(ThemeContext) as themeContextType;
+  const { colorScheme } = useContext(ThemeContext) as themeContextType;
   const themedStyles = useMemo(() => styles(colorScheme), [colorScheme]);
 
   return (
     <SafeAreaView style={themedStyles.appContainer}>
-      <StatusBar
-        barStyle={theme !== 'light' ? 'light-content' : 'dark-content'}
-      />
-
       {children}
     </SafeAreaView>
   );

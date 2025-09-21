@@ -1,13 +1,13 @@
 import { View, StyleSheet, Dimensions, ScrollView, Button } from 'react-native';
 import React from 'react';
 import { ThemedText } from '../../../components/ThemedText';
-import ThemedView from '../../../components/ThemedView/ThemedView';
+import ThemedView from '../../../components/ThemedView';
 
 import { Colors } from '../../../constants/Colors';
 import { ThemedButton } from '../../../components/ThemedButton';
 import RouteForm from '../../../components/Forms/RouteForm';
 
-export default function Plans({ navigation }) {
+export default function Plans() {
   return (
     <View style={styles.containter}>
       <ThemedView style={{ paddingHorizontal: 0 }}>

@@ -3,7 +3,7 @@ import React from 'react';
 import { useNavigation } from '@react-navigation/core';
 import { ThemedButton } from '../../components/ThemedButton';
 import { ThemedText } from '../../components/ThemedText';
-import ThemedView from '../../components/ThemedView/ThemedView';
+import ThemedView from '../../components/ThemedView';
 import ROUTES from '../../constants/routes';
 
 export default function ErrorScreen({ route }) {

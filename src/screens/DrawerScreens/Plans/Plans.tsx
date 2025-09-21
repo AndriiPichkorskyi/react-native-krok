@@ -1,30 +1,18 @@
 import { View, StyleSheet, Dimensions, ScrollView } from 'react-native';
 import React, { useContext, useMemo } from 'react';
 import { ThemedText } from '../../../components/ThemedText';
-import ThemedView from '../../../components/ThemedView/ThemedView';
-import { Header } from '../../../components/Header/Header';
-
-import FontAwesome5 from '@react-native-vector-icons/fontawesome5';
+import ThemedView from '../../../components/ThemedView';
 import { Colors, colorScheme } from '../../../constants/Colors';
-import LinearGradient from 'react-native-linear-gradient';
 import ProgressDayChart from '../../../components/Charts/ProgressDayChart';
-import { ThemedButton } from '../../../components/ThemedButton';
 import WeekPlanForm from '../../../components/Forms/WeekPlan';
 import {
   ThemeContext,
   themeContextType,
 } from '../../../context/theme/ThemeContext';
 
-export default function Plans({ navigation }) {
+export default function Plans() {
   const { colorScheme } = useContext(ThemeContext) as themeContextType;
   const themedStyles = useMemo(() => styles(colorScheme), [colorScheme]);
-
-  const tipOfTheDayText = [
-    '+1 200 кроків до цілі — 12 хв прогулянки',
-    'Пора рухатись?',
-    '',
-    'Молодець! Ти на правильному шляху',
-  ];
 
   return (
     <ThemedView>

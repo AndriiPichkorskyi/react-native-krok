@@ -1,8 +1,9 @@
-import { StatusBar, StyleSheet, useColorScheme } from 'react-native';
+import React, { useContext } from 'react';
+import { StatusBar } from 'react-native';
 import { StackNavigation } from './navigation';
 import { Provider } from 'react-redux';
 import store from './redux/store';
-import { ThemeProvider } from './context/theme/ThemeContext';
+import { ThemeProvider, ThemeContext, themeContextType } from './context/theme/ThemeContext';
 import AppSafeArea from './components/AppContent/AppContent';
 import { UIManager, Platform } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -17,24 +18,33 @@ if (
   UIManager.setLayoutAnimationEnabledExperimental(true);
 }
 
+function AppContent() {
+  const { theme } = useContext(ThemeContext) as themeContextType;
+
+  return (
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <StatusBar
+        barStyle={theme !== 'light' ? 'light-content' : 'dark-content'}
+      />
+      <AppSafeArea>
+        <StackNavigation />
+      </AppSafeArea>
+      <InitStepCounter />
+      <Loader />
+    </GestureHandlerRootView>
+  );
+}
+
 function App() {
   return (
     <Provider store={store}>
       <ThemeProvider>
         <LoaderProvider>
-          <GestureHandlerRootView>
-            <AppSafeArea>
-              <StackNavigation />
-            </AppSafeArea>
-          </GestureHandlerRootView>
-          <InitStepCounter />
-          <Loader />
+          <AppContent />
         </LoaderProvider>
       </ThemeProvider>
     </Provider>
   );
 }
-
-const styles = StyleSheet.create({});
 
 export default App;

@@ -51,12 +51,20 @@ export default function TabNavigation() {
       <Tab.Screen
         name={ROUTES.HOME}
         component={Home}
-        options={{ title: ROUTES.HOME }}
+        options={{ title: 'Головна' }}
       />
-      {/* <Tab.Screen name={ROUTES.STATISTICS} component={Statistics} /> */}
-      <Tab.Screen name={ROUTES.LEADERBOARDS} component={Leaderboards} />
-      {/* <Tab.Screen name={ROUTES.CHALLENGE} component={Challenge} /> */}
-      <Tab.Screen name={ROUTES.SETTINGS} component={SettingsScreen} />
+      {/* <Tab.Screen name={ROUTES.STATISTICS} component={Statistics} options={{ title: 'Статистика' }} /> */}
+      <Tab.Screen
+        name={ROUTES.LEADERBOARDS}
+        component={Leaderboards}
+        options={{ title: 'Лідерборд' }}
+      />
+      {/* <Tab.Screen name={ROUTES.CHALLENGE} component={Challenge} options={{ title: 'Виклики' }} /> */}
+      <Tab.Screen
+        name={ROUTES.SETTINGS}
+        component={SettingsScreen}
+        options={{ title: 'Налаштування' }}
+      />
     </Tab.Navigator>
   );
 }

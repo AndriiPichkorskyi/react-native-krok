@@ -5,11 +5,10 @@ export default function LineChartComponent({
   width = 200,
   height = 192,
   data = {
-    labels: ['пят', 'пон', 'вів', 'cер', 'чет', 'пят', 'суб', 'нед'],
+    labels: ['пон', 'вів', 'cер', 'чет', 'пят', 'суб', 'нед'],
     datasets: [
       {
         data: [50, 20, 2, 86, 71, 100],
-        // color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`, // optional
       },
     ],
   },
@@ -30,7 +29,7 @@ export default function LineChartComponent({
       {...progressChartConfiguration}
       bezier
       {...props}
-      style={Object.assign({}, props.style, { paddingRight: 0 })}
+      style={Object.assign({}, props.style, { paddingRight: 16 })}
     />
   );
 }

@@ -1,8 +1,8 @@
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 import React, { useState, useCallback, useContext, useMemo } from 'react';
 import { ThemedText } from '../../../components/ThemedText';
-import ThemedView from '../../../components/ThemedView/ThemedView';
-import ThemeSwitcher from '../../../components/ThemeSwitcher/ThemeSwitcher';
+import ThemedView from '../../../components/ThemedView';
+import ThemeSwitcher from '../../../components/ThemeSwitcher';
 import { ThemedInput } from '../../../components/ThemedInput';
 import { userSelector } from '../../../redux/selectors';
 import { useDispatch, useSelector } from 'react-redux';
