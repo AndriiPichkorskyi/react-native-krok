@@ -1,0 +1,21 @@
+# Ігноруємо нативні директорії (Android / iOS)
+ios/* linguist-vendored
+android/* linguist-vendored
+
+# Ігноруємо автогенеровані build-файли
+*.pbxproj linguist-vendored
+*.xcworkspace linguist-vendored
+*.xcassets linguist-vendored
+*.plist linguist-vendored
+*.gradle linguist-vendored
+*.iml linguist-vendored
+
+# XML, які GitHub часто рахує як HTML
+*.xml linguist-vendored
+
+# JSON-конфіги (не основний код)
+*.json linguist-vendored
+
+# Логи, метаінфа
+*.log linguist-vendored
+*.lock linguist-vendored
