@@ -7,9 +7,9 @@ import {
   View,
 } from 'react-native';
 import { ThemedText } from '../ThemedText';
-import React from 'react';
+import React, { useMemo } from 'react';
 import FontAwesome5 from '@react-native-vector-icons/fontawesome5';
-import { Colors, colorScheme } from '../../constants/Colors';
+import { colorScheme } from '../../constants/Colors';
 
 import { useContext } from 'react';
 import {
@@ -32,11 +32,12 @@ export function ThemedButton({
   ...props
 }: ThemedButton) {
   const { colorScheme } = useContext(ThemeContext) as themeContextType;
+  const themedStyles = useMemo(() => styles(colorScheme), [colorScheme]);
 
   return (
     <TouchableOpacity
       activeOpacity={0.8}
-      style={[styles(colorScheme).button, styles(colorScheme)[type], style]}
+      style={[themedStyles.button, themedStyles[type], style]}
       {...props}
     >
       <View>
@@ -44,15 +45,15 @@ export function ThemedButton({
           <FontAwesome5
             name={icon}
             size={16}
-            style={styles(colorScheme).icon}
+            style={themedStyles.icon}
             color={colorScheme.textSecondary}
             iconStyle="solid"
           />
         )}
         <ThemedText
           style={{
-            ...styles(colorScheme).text,
-            color: styles(colorScheme)[type].color,
+            ...themedStyles.text,
+            color: themedStyles[type].color,
           }}
         >
           {title}
@@ -79,13 +80,17 @@ const styles = (theme: colorScheme) =>
       backgroundColor: theme.primary,
     },
     secondary: {
-      color: theme.textSecondary,
-      backgroundColor: '#FFF',
+      color: theme.text,
+      backgroundColor: theme.background,
       borderWidth: 1,
       borderColor: theme.borderColor,
     },
     icon: {
       position: 'absolute',
       left: -32,
+    },
+    buttonView: {
+      flexDirection: 'row',
+      gap: 12,
     },
   });

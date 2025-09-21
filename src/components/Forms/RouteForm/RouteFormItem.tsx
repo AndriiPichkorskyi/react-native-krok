@@ -1,13 +1,7 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  TextInput,
-  TouchableOpacity,
-} from 'react-native';
+import { View, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import React, { useCallback, useContext, useMemo, useRef } from 'react';
 import FontAwesome5 from '@react-native-vector-icons/fontawesome5';
-import { Colors, colorScheme } from '../../../constants/Colors';
+import { colorScheme } from '../../../constants/Colors';
 import { type handleInputChangeType, type handleOnDelete } from './RouteForm';
 import {
   ThemeContext,
@@ -18,9 +12,9 @@ import Animated, {
   useAnimatedStyle,
   useSharedValue,
 } from 'react-native-reanimated';
-import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import ReanimatedSwipeable from 'react-native-gesture-handler/ReanimatedSwipeable';
 import { useWhyDidYouUpdate } from '../../../hooks/whyDidYouUpdate';
+import { RectButton } from 'react-native-gesture-handler';
 
 type WeekPlanItemProps = {
   index: number;
@@ -41,7 +35,9 @@ export default function RouteFormItem({
   ...props
 }: WeekPlanItemProps) {
   const { colorScheme } = useContext(ThemeContext) as themeContextType;
-  const swipeableRef = useRef<null | ReanimatedSwipeable>(null);
+  const themedStyles = useMemo(() => styles(colorScheme), [colorScheme]);
+
+  const swipeableRef = useRef<null | typeof ReanimatedSwipeable>(null);
 
   useWhyDidYouUpdate('Route form item ' + index, {
     index,
@@ -55,7 +51,7 @@ export default function RouteFormItem({
 
   const buttonProps = !active
     ? { color: colorScheme.primary }
-    : { color: '#565656' };
+    : { color: colorScheme.inactive };
 
   const placeholder = useMemo(placeholderRandom, [index]);
 
@@ -63,21 +59,24 @@ export default function RouteFormItem({
     (prog: SharedValue<number>, drag: SharedValue<number>) => {
       const styleAnimation = useAnimatedStyle(() => {
         return {
-          transform: [{ translateX: drag.value + 40 }],
+          transform: [{ translateX: drag.value + 70 }],
         };
       });
 
       return (
         <Animated.View style={styleAnimation}>
-          <TouchableOpacity onPress={() => onDelete(index)}>
+          <RectButton
+            onPress={() => onDelete(index)}
+            style={themedStyles.iconWrapper}
+          >
             <FontAwesome5
               name="trash"
               iconStyle="solid"
               size={24}
-              style={styles(colorScheme).icon}
+              style={themedStyles.icon}
               color="#565656"
             />
-          </TouchableOpacity>
+          </RectButton>
         </Animated.View>
       );
     },
@@ -88,13 +87,14 @@ export default function RouteFormItem({
     (prog: SharedValue<number>, drag: SharedValue<number>) => {
       const styleAnimation = useAnimatedStyle(() => {
         return {
-          transform: [{ translateX: drag.value - 45 }],
+          transform: [{ translateX: drag.value - 70 }],
         };
       });
 
       return (
         <Animated.View style={styleAnimation}>
-          <TouchableOpacity
+          <RectButton
+            style={themedStyles.iconWrapperLeft}
             onPress={() => {
               onToggle(index);
               swipeableRef.current?.close();
@@ -104,10 +104,10 @@ export default function RouteFormItem({
               name="check-circle"
               iconStyle="solid"
               size={24}
-              style={styles(colorScheme).icon}
+              style={themedStyles.icon}
               {...buttonProps}
             />
-          </TouchableOpacity>
+          </RectButton>
         </Animated.View>
       );
     },
@@ -119,25 +119,22 @@ export default function RouteFormItem({
       ref={swipeableRef}
       friction={2}
       enableTrackpadTwoFingerGesture
-      // leftThreshold={30}
-      // rightThreshold={70}
+      leftThreshold={30}
+      rightThreshold={30}
       renderLeftActions={ToggleAction}
       renderRightActions={DeleteAction}
       containerStyle={{
         // marginHorizontal: 16,
-        paddingHorizontal: 16,
+        // paddingHorizontal: 16,
+        paddingHorizontal: 32,
       }}
     >
-      <View style={styles(colorScheme).item}>
-        <View style={[styles(colorScheme).textContainer]}>
+      <View style={themedStyles.item}>
+        <View style={[themedStyles.textContainer]}>
           <TextInput
-            keyboardType="numeric"
             placeholder={placeholder}
             value={route}
-            style={[
-              styles(colorScheme).input,
-              !active && styles(colorScheme).inputDisable,
-            ]}
+            style={[themedStyles.input, !active && themedStyles.inputDisable]}
             placeholderTextColor={'#707070'}
             editable={active}
             onChangeText={text => onChange(text, index)}
@@ -159,12 +156,19 @@ const styles = (theme: colorScheme) =>
       // marginHorizontal: 24,
       // paddingHorizontal: 12,
     },
+    iconWrapper: {
+      // width: 64,
+      // paddingLeft: 16,
+      marginRight: 16,
+    },
+    iconWrapperLeft: { marginLeft: 16 },
     icon: {
       padding: 12,
       borderRadius: 6,
       backgroundColor: theme.inputBG,
       borderWidth: theme.borderWidth,
       borderColor: theme.borderColor,
+      width: 50,
       // marginHorizontal: 12,
     },
     textContainer: {

@@ -1,8 +1,12 @@
 import { View, Text, ActivityIndicator, StyleSheet } from 'react-native';
 import React from 'react';
 import { Colors } from '../../constants/Colors';
+import { useLoading } from '../../context/loaderContext';
 
 export default function Loader() {
+  const { showLoader } = useLoading();
+
+  if (!showLoader) return null;
   return (
     <View style={styles.container}>
       <ActivityIndicator size="large" color={Colors.light.primary} />

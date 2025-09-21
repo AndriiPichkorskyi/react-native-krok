@@ -1,5 +1,5 @@
 import { View, StyleSheet, Dimensions, ScrollView } from 'react-native';
-import React, { useContext } from 'react';
+import React, { useContext, useMemo } from 'react';
 import { ThemedText } from '../../../components/ThemedText';
 import ThemedView from '../../../components/ThemedView/ThemedView';
 import { Header } from '../../../components/Header/Header';
@@ -17,6 +17,7 @@ import {
 
 export default function Plans({ navigation }) {
   const { colorScheme } = useContext(ThemeContext) as themeContextType;
+  const themedStyles = useMemo(() => styles(colorScheme), [colorScheme]);
 
   const tipOfTheDayText = [
     '+1 200 кроків до цілі — 12 хв прогулянки',
@@ -26,38 +27,23 @@ export default function Plans({ navigation }) {
   ];
 
   return (
-    <View style={styles(colorScheme).containter}>
-      <Header navigation={navigation} />
-      <ThemedView>
-        <ScrollView>
-          <ThemedText type="h1">Коучинг & Плани</ThemedText>
-          <ThemedText style={styles(colorScheme).subTitle}>
-            Моя ціль на сьогодні
+    <ThemedView>
+      <ThemedText type="h1">Коучинг & Плани</ThemedText>
+      <ThemedText style={themedStyles.subTitle}>
+        Моя ціль на сьогодні
+      </ThemedText>
+      <ScrollView>
+        <ProgressDayChart style={themedStyles.chart} />
+        {/* <ThemedButton title="Редагувати Ціль" icon="pencil-alt" /> */}
+        <View style={themedStyles.planForm}>
+          <ThemedText type="h2">План на тиждень</ThemedText>
+          <ThemedText style={themedStyles.subTitle}>
+            Кожного тижня ціль зростає на +5%. Ви на правильному шляху
           </ThemedText>
-          <ProgressDayChart style={styles(colorScheme).chart} />
-          <ThemedButton title="Редагувати Ціль" icon="pencil-alt" />
-          <View style={styles(colorScheme).planForm}>
-            <ThemedText type="h2">План на тиждень</ThemedText>
-            <ThemedText style={styles(colorScheme).subTitle}>
-              Кожного тижня ціль зростає на +5%. Ви на правильному шляху
-            </ThemedText>
-            <WeekPlanForm />
-          </View>
-          <LinearGradient
-            style={styles(colorScheme).tipWrapper}
-            colors={[Colors.light.gradientTo, Colors.light.gradientFrom]}
-          >
-            <View style={styles(colorScheme).tipOfTheDay}>
-              {tipOfTheDayText.map((text, i) => (
-                <ThemedText style={styles(colorScheme).tipText} key={i}>
-                  {text}
-                </ThemedText>
-              ))}
-            </View>
-          </LinearGradient>
-        </ScrollView>
-      </ThemedView>
-    </View>
+          <WeekPlanForm />
+        </View>
+      </ScrollView>
+    </ThemedView>
   );
 }
 

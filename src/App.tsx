@@ -6,6 +6,9 @@ import { ThemeProvider } from './context/theme/ThemeContext';
 import AppSafeArea from './components/AppContent/AppContent';
 import { UIManager, Platform } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { LoaderProvider } from './context/loaderContext';
+import Loader from './components/Loader';
+import InitStepCounter from './components/InitStepCounter';
 
 if (
   Platform.OS === 'android' &&
@@ -18,11 +21,15 @@ function App() {
   return (
     <Provider store={store}>
       <ThemeProvider>
-        <GestureHandlerRootView>
-          <AppSafeArea>
-            <StackNavigation />
-          </AppSafeArea>
-        </GestureHandlerRootView>
+        <LoaderProvider>
+          <GestureHandlerRootView>
+            <AppSafeArea>
+              <StackNavigation />
+            </AppSafeArea>
+          </GestureHandlerRootView>
+          <InitStepCounter />
+          <Loader />
+        </LoaderProvider>
       </ThemeProvider>
     </Provider>
   );

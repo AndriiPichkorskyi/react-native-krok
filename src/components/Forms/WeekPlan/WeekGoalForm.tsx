@@ -28,6 +28,14 @@ export default function WeekGoalForm() {
     });
   };
 
+  const handleToggleGoal = (index: number) => {
+    setSteps(state => {
+      const newState = [...state];
+      newState[index].active = !newState[index].active;
+      return newState;
+    });
+  };
+
   return (
     <View style={styles.form}>
       {steps.map((steps, index) => (
@@ -37,6 +45,7 @@ export default function WeekGoalForm() {
           active={steps.active}
           key={index}
           onChange={handleInputChange}
+          handleToggleGoal={handleToggleGoal}
         />
       ))}
     </View>

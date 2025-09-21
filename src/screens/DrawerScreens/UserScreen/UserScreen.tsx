@@ -1,18 +1,20 @@
 import { View, Text, StyleSheet, Image } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import ThemedView from '../../../components/ThemedView/ThemedView';
-import api, { type UserType } from '../../../api/supabase';
+import api, { ProfileType, type UserType } from '../../../api/supabase';
 import { useNavigation } from '@react-navigation/core';
 import ROUTES from '../../../constants/routes';
 import { ThemedText } from '../../../components/ThemedText';
 import { Colors } from '../../../constants/Colors';
 import { ThemedButton } from '../../../components/ThemedButton';
 import Loader from '../../../components/Loader';
+import { useLoading } from '../../../context/loaderContext';
 
 export default function UserScreen({ route }) {
+  const { toggleLoader } = useLoading();
   const navigation = useNavigation();
 
-  const [user, setUser] = useState(null as null | UserType);
+  const [user, setUser] = useState(null as null | ProfileType);
   const [error, setError] = useState('');
 
   const goBack = () => {
@@ -20,16 +22,13 @@ export default function UserScreen({ route }) {
     else navigation.navigate(ROUTES.LEADERBOARDS);
   };
 
-  // isLoading is true because we defenetly load user from database on screen open
-  const [isLoading, setIsLoading] = useState(true);
-
   useEffect(() => {
     const { id } = route.params;
     if (!id) setError('ID відсутній');
 
     const getUser = async function () {
       try {
-        setIsLoading(true);
+        toggleLoader(true);
         const data = await api.getUserByID(id);
         setError('');
         setUser(data);
@@ -37,7 +36,7 @@ export default function UserScreen({ route }) {
         setError(String(error));
         setUser(null);
       } finally {
-        setIsLoading(false);
+        toggleLoader(false);
       }
     };
 
@@ -59,18 +58,15 @@ export default function UserScreen({ route }) {
           ></ThemedButton>
         </View>
       )}
-      {isLoading && <Loader />}
 
       {user && (
         <View>
-          <Image source={{ uri: user.avatar }} style={styles.userAvatar} />
+          <Image source={{ uri: user.avatar_url }} style={styles.userAvatar} />
           <View style={styles.userInformation}>
-            <ThemedText type="h2">
-              {user.first_name} {user.last_name}
-            </ThemedText>
+            <ThemedText type="h2">{user.username}</ThemedText>
             <ThemedText>
               <ThemedText style={styles.userKilometers}>
-                {user.email}
+                UUID: {user.id}
               </ThemedText>
             </ThemedText>
           </View>

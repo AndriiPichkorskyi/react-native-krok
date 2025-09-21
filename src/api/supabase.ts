@@ -28,6 +28,15 @@ export type UserType = {
   kilometers: number;
 };
 
+export type ProfileType = {
+  id: string;
+  username: string;
+  full_name: string;
+  avatar_url: string;
+  created_at: string;
+  steps: number;
+};
+
 export async function getUsers({ limit = 100 }): Promise<UserType[]> {
   const response = await instance.get('rest/v1/User', {
     params: {
@@ -39,27 +48,26 @@ export async function getUsers({ limit = 100 }): Promise<UserType[]> {
   return response.data;
 }
 
-export async function getLeaderBoard({ limit = 100 }): Promise<UserType[]> {
-  const response = await instance.get('rest/v1/User', {
+export async function getLeaderBoard({ limit = 100 }): Promise<ProfileType[]> {
+  const response = await instance.get('rest/v1/profiles', {
     params: {
       select: '*',
       limit: limit,
-      order: 'kilometers.desc',
+      order: 'steps.desc',
     },
   });
 
   return response.data;
 }
 
-export async function getUserByID(id: number): Promise<UserType> {
-  const response = await instance.get('rest/v1/User', {
+export async function getUserByID(id: string): Promise<ProfileType> {
+  const response = await instance.get('rest/v1/profiles', {
     params: {
       select: '*',
       limit: 1,
       id: 'eq.' + id,
     },
   });
-  // console.log(response);
   return response.data[0];
 }
 

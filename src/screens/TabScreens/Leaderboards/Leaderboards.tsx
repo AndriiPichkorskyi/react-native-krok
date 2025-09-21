@@ -8,24 +8,25 @@ import {
   View,
 } from 'react-native';
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
-import api, { type UserType } from '../../../api/supabase';
+import api, { type ProfileType } from '../../../api/supabase';
 import { Colors, colorScheme } from '../../../constants/Colors';
 import { useNavigation } from '@react-navigation/core';
 import ROUTES from '../../../constants/routes';
-import Loader from '../../../components/Loader';
-import { Header } from '../../../components/Header/Header';
 import {
   ThemeContext,
   themeContextType,
 } from '../../../context/theme/ThemeContext';
+import { useLoading } from '../../../context/loaderContext';
 
-export default function Leaderboards({ navigation: drawerNavigation }) {
+export default function Leaderboards() {
+  const { toggleLoader } = useLoading();
   const { colorScheme } = useContext(ThemeContext) as themeContextType;
+  const themedStyles = useMemo(() => styles(colorScheme), [colorScheme]);
+
   const navigation = useNavigation();
 
-  const [data, setData] = useState([] as UserType[]);
+  const [data, setData] = useState([] as ProfileType[]);
   const [error, setError] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
 
   const topThree = useMemo(() => data.slice(0, 3), [data]);
   const others = useMemo(() => data.slice(3), [data]);
@@ -33,15 +34,16 @@ export default function Leaderboards({ navigation: drawerNavigation }) {
   useEffect(() => {
     const getUsers = async function () {
       try {
-        setIsLoading(true);
+        toggleLoader(true);
         const data = await api.getLeaderBoard({ limit: 10 });
+        console.log(data);
         setError('');
         setData(data);
       } catch (error) {
         setError(String(error));
         setData([]);
       } finally {
-        setIsLoading(false);
+        toggleLoader(false);
       }
     };
     getUsers();
@@ -52,29 +54,28 @@ export default function Leaderboards({ navigation: drawerNavigation }) {
   };
 
   const renderUser = useCallback(
-    ({ item, index }: { item: UserType; index: number }) => (
+    ({ item, index }: { item: ProfileType; index: number }) => (
       <TouchableOpacity
-        style={styles(colorScheme).userItem}
+        style={themedStyles.userItem}
         onPress={() => onItemClick(item.id)}
       >
-        <View style={styles(colorScheme).userNumber}>
+        <View style={themedStyles.userNumber}>
           <ThemedText type="h3">{index + 1}</ThemedText>
         </View>
 
         <Image
-          source={{ uri: item.avatar }}
-          style={styles(colorScheme).userAvatar}
+          source={{ uri: item.avatar_url }}
+          style={themedStyles.userAvatar}
         />
-        <View style={styles(colorScheme).userInformation}>
-          <ThemedText type="h2">
-            {item.first_name} {item.last_name}
+        <View style={themedStyles.userInformation}>
+          <ThemedText numberOfLines={1} ellipsizeMode="tail" type="h2">
+            {item.username}
           </ThemedText>
           <ThemedText>
-            Distance:{' '}
-            <ThemedText style={styles(colorScheme).userKilometers}>
-              {item.kilometers}
+            Кроків:{' '}
+            <ThemedText style={themedStyles.userKilometers}>
+              {item.steps}
             </ThemedText>{' '}
-            km
           </ThemedText>
         </View>
       </TouchableOpacity>
@@ -84,23 +85,20 @@ export default function Leaderboards({ navigation: drawerNavigation }) {
 
   return (
     <>
-      <Header navigation={drawerNavigation} />
-      <ThemedView style={styles(colorScheme).containter}>
-        <ThemedText type="h1" style={styles(colorScheme).title}>
+      <ThemedView style={themedStyles.containter}>
+        <ThemedText type="h1" style={themedStyles.title}>
           Leaderboards
         </ThemedText>
         {error && <ThemedText>{error}</ThemedText>}
-        {isLoading && <ThemedText>Loading...</ThemedText>}
-        {isLoading && <Loader />}
         <FlatList
-          style={styles(colorScheme).userList}
+          style={themedStyles.userList}
           data={others}
           renderItem={({ item, index }) =>
             renderUser({ item, index: index + 3 })
           }
           keyExtractor={item => String(item.id)}
           ListHeaderComponent={
-            <View style={styles(colorScheme).userSection}>
+            <View style={themedStyles.userSection}>
               {topThree.map((user, index) => (
                 <View key={user.id}>{renderUser({ item: user, index })}</View>
               ))}
@@ -139,6 +137,7 @@ const styles = (theme: colorScheme) =>
       flexDirection: 'row',
       gap: 16,
       padding: 8,
+      overflow: 'hidden',
     },
     userNumber: {
       justifyContent: 'center',
@@ -154,6 +153,9 @@ const styles = (theme: colorScheme) =>
     },
     userInformation: {
       justifyContent: 'space-around',
+      alignItems: 'flex-start',
+      paddingRight: 16,
+      maxWidth: 256,
     },
     userKilometers: {
       color: theme.primary,

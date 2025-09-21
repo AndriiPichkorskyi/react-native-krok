@@ -1,5 +1,5 @@
 import { StyleSheet, Text, type TextProps } from 'react-native';
-import { useContext } from 'react';
+import { useContext, useMemo } from 'react';
 import {
   ThemeContext,
   themeContextType,
@@ -19,6 +19,7 @@ export function ThemedText({
   ...rest
 }: ThemedTextProps) {
   const { colorScheme } = useContext(ThemeContext) as themeContextType;
+  const themedStyles = useMemo(() => styles(colorScheme), [colorScheme]);
 
   const styleColor =
     color === 'default'
@@ -26,7 +27,7 @@ export function ThemedText({
       : { color: colorScheme.primary };
   return (
     <Text
-      style={{ ...styles(colorScheme)[type], ...styleColor, ...style }}
+      style={{ ...themedStyles[type], ...styleColor, ...style }}
       {...rest}
     />
   );

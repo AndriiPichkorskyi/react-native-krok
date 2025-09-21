@@ -9,6 +9,7 @@ export const Colors: { [key: string]: colorScheme } = {
     gradientTo: '#14CBC5',
     borderColor: '#56565680',
     borderWidth: 1,
+    inactive: '#565656',
   },
   dark: {
     text: '#FFF',
@@ -20,6 +21,7 @@ export const Colors: { [key: string]: colorScheme } = {
     gradientTo: '#14CBC5',
     borderColor: '#E5E7EB',
     borderWidth: 1,
+    inactive: '#565656',
   },
 };
 
@@ -33,4 +35,5 @@ export type colorScheme = {
   gradientTo: string;
   borderColor: string;
   borderWidth: number;
+  inactive: string;
 };

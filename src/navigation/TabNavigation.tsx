@@ -5,22 +5,26 @@ import Statistics from '../screens/TabScreens/Statistics';
 import Challenge from '../screens/TabScreens/Challenge';
 import SettingsScreen from '../screens/TabScreens/SettingsScreen';
 import FontAwesome5 from '@react-native-vector-icons/fontawesome5';
-import { Colors } from '../constants/Colors';
-import { useContext } from 'react';
+import { useContext, useMemo } from 'react';
 import { ThemeContext, themeContextType } from '../context/theme/ThemeContext';
+import Leaderboards from '../screens/TabScreens/Leaderboards';
 
 const Tab = createBottomTabNavigator();
 
 export default function TabNavigation() {
   const { colorScheme } = useContext(ThemeContext) as themeContextType;
+  // const themedStyles = useMemo(() => styles(colorScheme), [colorScheme])
+
   return (
     <Tab.Navigator
+      key={colorScheme.background}
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           const icons = {
             [ROUTES.HOME]: 'home',
-            [ROUTES.STATISTICS]: 'chart-line',
+            // [ROUTES.STATISTICS]: 'chart-line',
             [ROUTES.CHALLENGE]: 'award',
+            [ROUTES.LEADERBOARDS]: 'award',
             [ROUTES.SETTINGS]: 'cog',
           };
 
@@ -37,6 +41,7 @@ export default function TabNavigation() {
         tabBarInactiveTintColor: colorScheme.text,
         tabBarActiveBackgroundColor: colorScheme.inputBG,
         tabBarInactiveBackgroundColor: colorScheme.inputBG,
+        headerShown: false,
         headerStyle: {
           backgroundColor: colorScheme.inputBG,
         },
@@ -46,10 +51,11 @@ export default function TabNavigation() {
       <Tab.Screen
         name={ROUTES.HOME}
         component={Home}
-        options={{ title: ROUTES.HOME, headerShown: false }}
+        options={{ title: ROUTES.HOME }}
       />
-      <Tab.Screen name={ROUTES.STATISTICS} component={Statistics} />
-      <Tab.Screen name={ROUTES.CHALLENGE} component={Challenge} />
+      {/* <Tab.Screen name={ROUTES.STATISTICS} component={Statistics} /> */}
+      <Tab.Screen name={ROUTES.LEADERBOARDS} component={Leaderboards} />
+      {/* <Tab.Screen name={ROUTES.CHALLENGE} component={Challenge} /> */}
       <Tab.Screen name={ROUTES.SETTINGS} component={SettingsScreen} />
     </Tab.Navigator>
   );

@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useMemo, useState } from 'react';
 import { ThemedText } from '../../components/ThemedText';
 import { ThemedInput } from '../../components/ThemedInput';
 import { ThemedButton } from '../../components/ThemedButton';
@@ -19,6 +19,11 @@ import {
   ThemeContext,
   themeContextType,
 } from '../../context/theme/ThemeContext';
+import { supabase } from '../../api/supabaseLib';
+import { useLoading } from '../../context/loaderContext';
+import { useDispatch } from 'react-redux';
+import { setUser } from '../../redux/userSlice';
+import randomAvatar from '../../helpers/randomAvatar';
 
 const mods = {
   registration: 'Зареєструватися',
@@ -26,17 +31,21 @@ const mods = {
 };
 
 export default function SingUp() {
+  const { toggleLoader } = useLoading();
+  const dispatch = useDispatch();
   const { colorScheme } = useContext(ThemeContext) as themeContextType;
+  const themedStyles = useMemo(() => styles(colorScheme), [colorScheme]);
+
   const navigation = useNavigation();
 
   const [mode, setMode] = useState(mods.registration);
-  const [email, setEmail] = useState('root');
-  const [password, setPassword] = useState('root');
+  const [email, setEmail] = useState('test1@example.com');
+  const [password, setPassword] = useState('123456');
 
   const tabStyles = (tabName: string) =>
     tabName === mode
-      ? { ...styles(colorScheme).tab, ...styles(colorScheme).tabActive }
-      : styles(colorScheme).tab;
+      ? { ...themedStyles.tab, ...themedStyles.tabActive }
+      : themedStyles.tab;
 
   const changeMode = () => {
     mode === mods.registration
@@ -52,29 +61,81 @@ export default function SingUp() {
     setPassword(event);
   };
 
-  const handleSignUp = () => {
+  const handleSignUp = async () => {
+    const { error, data } = await supabase.auth.signUp({
+      email: email,
+      password: password,
+      options: {
+        data: {
+          avatar_url: randomAvatar(email.split('@')[0]),
+        },
+      },
+    });
+    return { error, data };
+  };
+
+  const handleSignIn = async () => {
+    const { error, data } = await supabase.auth.signInWithPassword({
+      email: email,
+      password: password,
+    });
+    return { error, data };
+  };
+
+  const handleAuth = async () => {
     if (!email || !password)
       navigation.navigate(ROUTES.ERROR_SCREEN, {
         message: 'email або password невірні',
       });
 
-    navigation.navigate(ROUTES.DRAWER);
-    navigation.dispatch(
-      CommonActions.reset({
-        index: 0,
-        routes: [{ name: ROUTES.DRAWER }],
-      }),
-    );
+    try {
+      toggleLoader(true);
+
+      let response;
+
+      if (mode === mods.registration) {
+        response = await handleSignUp();
+      } else {
+        response = await handleSignIn();
+      }
+
+      const { error, data } = response;
+
+      if (error) throw error;
+
+      console.log(data);
+
+      if (data.session) {
+        console.log('User signed in automatically:', data.user);
+        // return { user: data.user, session: data.session };
+      }
+
+      dispatch(setUser(data.user));
+
+      navigation.navigate(ROUTES.DRAWER);
+      navigation.dispatch(
+        CommonActions.reset({
+          index: 0,
+          routes: [{ name: ROUTES.DRAWER }],
+        }),
+      );
+    } catch (error) {
+      navigation.navigate(ROUTES.ERROR_SCREEN, {
+        message: error.message || String(error),
+      });
+    } finally {
+      toggleLoader(false);
+    }
   };
 
   return (
-    <ThemedView style={styles(colorScheme).containter}>
+    <ThemedView style={themedStyles.containter}>
       <ScrollView>
-        <ThemedText type="h1" style={styles(colorScheme).title}>
+        <ThemedText type="h1" style={themedStyles.title}>
           {mode}
         </ThemedText>
 
-        <View style={styles(colorScheme).tabs}>
+        <View style={themedStyles.tabs}>
           <TouchableOpacity onPress={changeMode}>
             <ThemedText style={tabStyles(mods.registration)}>
               {mods.registration}
@@ -87,7 +148,7 @@ export default function SingUp() {
           </TouchableOpacity>
         </View>
 
-        <View style={styles(colorScheme).inputsContainer}>
+        <View style={themedStyles.inputsContainer}>
           <ThemedInput
             onChange={onChangeInputEmail}
             placeholder="Email"
@@ -103,15 +164,15 @@ export default function SingUp() {
           />
         </View>
 
-        <View style={styles(colorScheme).bottomContainer}>
+        <View style={themedStyles.bottomContainer}>
           <ThemedButton
-            style={styles(colorScheme).button}
+            style={themedStyles.button}
             title={mode}
-            onPress={handleSignUp}
+            onPress={handleAuth}
           ></ThemedButton>
           <ThemedText>або за допомогою</ThemedText>
           {/* <ThemedText>{name + ' ' + password}</ThemedText> */}
-          <View style={styles(colorScheme).socials}>
+          <View style={themedStyles.socials}>
             <SocialIcon icon="facebook" />
             <SocialIcon icon="google" />
             <SocialIcon icon="apple" />

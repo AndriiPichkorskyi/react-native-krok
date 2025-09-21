@@ -1,14 +1,11 @@
 import { StyleSheet, View } from 'react-native';
 import ProgressChartComponent from './Parts/ProgressChartComponent';
 import { ThemedText } from '../ThemedText';
-import { useEffect } from 'react';
-import Animated, { useSharedValue, withTiming } from 'react-native-reanimated';
+import { stepsSelector } from '../../redux/selectors';
+import { useSelector } from 'react-redux';
 
-export default function ProgressDayChart({
-  goal = 10_000,
-  steps = 6162,
-  style = {},
-}) {
+export default function ProgressDayChart({ goal = 10_000, style = {} }) {
+  const steps = useSelector(stepsSelector) || 0;
   const stepsText = steps.toLocaleString('en-US');
   const percentProgress = steps / goal;
   const percentText = (percentProgress * 100).toFixed(0);

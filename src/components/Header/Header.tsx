@@ -1,41 +1,56 @@
 import { TouchableOpacity, View } from 'react-native';
 import { Image, StyleSheet } from 'react-native';
 import { ThemedText } from '../ThemedText';
-import { Colors } from '../../constants/Colors';
+import { Colors, colorScheme } from '../../constants/Colors';
 import FontAwesome5 from '@react-native-vector-icons/fontawesome5';
-import { useContext } from 'react';
+import { useContext, useEffect, useMemo, useState } from 'react';
 import {
   ThemeContext,
   themeContextType,
 } from '../../context/theme/ThemeContext';
+import { useSelector } from 'react-redux';
+import { supabase } from '../../api/supabaseLib';
+import { userSelector } from '../../redux/selectors';
 // IonIcons
 
-export function Header({ name = 'John', navigation }) {
+export function Header({ navigation }) {
+  const user = useSelector(userSelector);
+  console.log(user);
+
+  const [username, setUsername] = useState('');
+  useEffect(() => {
+    (async () => {
+      setUsername(user.username || user.email.split('@')[0]);
+    })();
+  }, [user]);
+
   const { colorScheme } = useContext(ThemeContext) as themeContextType;
+  const themedStyles = useMemo(() => styles(colorScheme), [colorScheme]);
 
   const toggleMenu = () => navigation.toggleDrawer();
 
   return (
-    <View style={styles.header}>
+    <View style={themedStyles.header}>
       {/* Left side with image and text */}
-      <View style={styles.user}>
+      <View style={themedStyles.user}>
         <Image
-          style={styles.userImage}
-          source={require('../../assets/cat.jpg')}
+          style={themedStyles.userImage}
+          source={{ uri: user.avatar_url }}
+          // source={require('../../assets/cat.jpg')}
         />
-        <View style={styles.userInfo}>
-          <View style={styles.firstLine}>
+        <View style={themedStyles.userInfo}>
+          <View style={themedStyles.firstLine}>
             <ThemedText>Hello! </ThemedText>
-            <ThemedText color="primary">{name}</ThemedText>
+            <ThemedText color="primary">{username}</ThemedText>
           </View>
-          <View style={styles.secondLiine}>
+          <View style={themedStyles.secondLiine}>
             <ThemedText>{new Date().toLocaleDateString()}</ThemedText>
           </View>
         </View>
       </View>
 
       {/* Right side with notification icon */}
-      <View style={styles.containerNotification}>
+      <View style={themedStyles.containerNotification}>
         <FontAwesome5 name="bell" size={30} color={colorScheme.text} />
         <TouchableOpacity onPress={toggleMenu}>
           <FontAwesome5
@@ -50,39 +65,40 @@ export function Header({ name = 'John', navigation }) {
   );
 }
 
-const styles = StyleSheet.create({
-  header: {
-    justifyContent: 'space-between',
-    height: 64,
-    flexDirection: 'row',
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    borderBottomColor: Colors.light.primary,
-    borderBottomWidth: 1,
-  },
-  user: {
-    flexDirection: 'row',
-    height: '100%',
-  },
-  userInfo: {
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    paddingLeft: 4,
-    height: '100%',
-  },
-  firstLine: {
-    flexDirection: 'row',
-  },
-  secondLiine: {},
-  userImage: {
-    width: 40,
-    height: 40,
-    resizeMode: 'cover',
-    borderRadius: 90,
-  },
-  containerNotification: {
-    flexDirection: 'row',
-    gap: 32,
-    height: 40,
-  },
-});
+const styles = (theme: colorScheme) =>
+  StyleSheet.create({
+    header: {
+      justifyContent: 'space-between',
+      height: 64,
+      flexDirection: 'row',
+      paddingHorizontal: 16,
+      paddingVertical: 12,
+      borderBottomColor: Colors.light.primary,
+      borderBottomWidth: 1,
+    },
+    user: {
+      flexDirection: 'row',
+      height: '100%',
+    },
+    userInfo: {
+      flexDirection: 'column',
+      justifyContent: 'space-between',
+      paddingLeft: 4,
+      height: '100%',
+    },
+    firstLine: {
+      flexDirection: 'row',
+    },
+    secondLiine: {},
+    userImage: {
+      width: 40,
+      height: 40,
+      resizeMode: 'cover',
+      borderRadius: 90,
+    },
+    containerNotification: {
+      flexDirection: 'row',
+      gap: 32,
+      height: 40,
+    },
+  });

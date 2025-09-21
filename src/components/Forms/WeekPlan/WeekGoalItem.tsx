@@ -5,11 +5,15 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native';
-import React from 'react';
+import React, { useContext, useMemo } from 'react';
 import FontAwesome5 from '@react-native-vector-icons/fontawesome5';
 import { ThemedText } from '../../ThemedText';
-import { Colors } from '../../../constants/Colors';
+import { colorScheme } from '../../../constants/Colors';
 import { type handleInputChangeType } from './WeekGoalForm';
+import {
+  ThemeContext,
+  themeContextType,
+} from '../../../context/theme/ThemeContext';
 
 const DAYS = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Нд'];
 
@@ -18,6 +22,7 @@ type WeekPlanItemProps = {
   steps: string;
   onChange: handleInputChangeType;
   active: boolean;
+  handleToggleGoal: Function;
 };
 
 export default function WeekGoalItem({
@@ -25,32 +30,33 @@ export default function WeekGoalItem({
   steps,
   onChange,
   active,
+  handleToggleGoal,
 }: WeekPlanItemProps) {
-  const Button = active ? (
-    <FontAwesome5
-      name="check-circle"
-      iconStyle="solid"
-      size={24}
-      style={styles.icon}
-      color={Colors.light.primary}
-    />
-  ) : (
-    <FontAwesome5
-      name="check-circle"
-      iconStyle="solid"
-      size={24}
-      style={styles.icon}
-      color="#565656"
-    />
-  );
+  const { colorScheme } = useContext(ThemeContext) as themeContextType;
+  const themedStyles = useMemo(() => styles(colorScheme), [colorScheme]);
+
+  const buttonProps = active
+    ? { color: colorScheme.primary }
+    : { color: colorScheme.inactive };
 
   return (
-    <View style={styles.item}>
-      <TouchableOpacity>{Button}</TouchableOpacity>
+    <View style={themedStyles.item}>
+      <TouchableOpacity onPress={() => handleToggleGoal(day)}>
+        <FontAwesome5
+          name="check-circle"
+          iconStyle="solid"
+          size={24}
+          style={themedStyles.icon}
+          {...buttonProps}
+        />
+      </TouchableOpacity>
 
-      <View style={[styles.textContainer]}>
+      <View style={[themedStyles.textContainer]}>
         <ThemedText
-          style={{ ...styles.weekDay, ...(!active ? styles.disabledItem : {}) }}
+          style={{
+            ...themedStyles.weekDay,
+            ...(!active ? themedStyles.disabledItem : {}),
+          }}
           type="h3"
         >
           {DAYS[day]}
@@ -61,7 +67,7 @@ export default function WeekGoalItem({
               keyboardType="numeric"
               placeholder="0"
               value={steps}
-              style={styles.input}
+              style={themedStyles.input}
               onChangeText={text => onChange(text, day)}
             />
             <ThemedText>кроків</ThemedText>
@@ -74,40 +80,42 @@ export default function WeekGoalItem({
   );
 }
 
-const styles = StyleSheet.create({
-  item: {
-    flexDirection: 'row',
-    gap: 12,
+const styles = (theme: colorScheme) =>
+  StyleSheet.create({
+    item: {
+      flexDirection: 'row',
+      gap: 12,
 
-    height: 46,
-  },
-  icon: {
-    padding: 12,
-    borderRadius: 6,
-    backgroundColor: Colors.light.inputBG,
-    borderWidth: Colors.light.borderWidth,
-    borderColor: Colors.light.borderColor,
-  },
-  textContainer: {
-    flexDirection: 'row',
-    padding: 12,
-    borderRadius: 12,
-    backgroundColor: Colors.light.inputBG,
-    flex: 1,
-    alignItems: 'center',
-    borderWidth: Colors.light.borderWidth,
-    borderColor: Colors.light.borderColor,
-  },
-  disabledItem: {
-    color: '#!active',
-  },
-  weekDay: {
-    marginRight: 24,
-    fontSize: 18,
-    color: Colors.light.primary,
-  },
-  input: {
-    marginRight: 4,
-    padding: 0,
-  },
-});
+      height: 46,
+    },
+    icon: {
+      padding: 12,
+      borderRadius: 6,
+      backgroundColor: theme.inputBG,
+      borderWidth: theme.borderWidth,
+      borderColor: theme.borderColor,
+    },
+    textContainer: {
+      flexDirection: 'row',
+      padding: 12,
+      borderRadius: 12,
+      backgroundColor: theme.inputBG,
+      flex: 1,
+      alignItems: 'center',
+      borderWidth: theme.borderWidth,
+      borderColor: theme.borderColor,
+    },
+    disabledItem: {
+      color: theme.inactive,
+    },
+    weekDay: {
+      marginRight: 24,
+      fontSize: 18,
+      color: theme.primary,
+    },
+    input: {
+      color: theme.text,
+      marginRight: 4,
+      padding: 0,
+    },
+  });

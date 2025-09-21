@@ -67,5 +67,7 @@
 	<string>SimpleLineIcons.ttf</string>
 	<string>Zocial.ttf</string>
 	</array>
+	<key>NSMotionUsageDescription</key>
+	<string>App needs access to motion data for step tracking.</string>
 </dict>
 </plist>

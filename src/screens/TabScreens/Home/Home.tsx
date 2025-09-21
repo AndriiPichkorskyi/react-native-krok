@@ -1,5 +1,5 @@
 import { View, StyleSheet, Dimensions } from 'react-native';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ThemedText } from '../../../components/ThemedText';
 import ThemedView from '../../../components/ThemedView/ThemedView';
 import { Header } from '../../../components/Header/Header';
@@ -17,6 +17,8 @@ import Animated, {
   withDelay,
   withSpring,
 } from 'react-native-reanimated';
+import { useSelector } from 'react-redux';
+import { stepsSelector } from '../../../redux/selectors';
 
 export default function Home({ navigation }) {
   const width = Dimensions.get('window').width - 32;
@@ -52,47 +54,42 @@ export default function Home({ navigation }) {
   ];
 
   return (
-    <View style={styles.containter}>
-      <Header navigation={navigation} />
-      <ThemedView>
-        <ProgressDayChart />
-        <View style={styles.todayStatistic}>
-          {todaysStatistic.map(({ icon, value, title }) => (
-            <View style={styles.todayStatisticItem} key={title}>
-              <FontAwesome5
-                name={icon}
-                iconStyle="solid"
-                size={24}
-                color={Colors.light.primary}
-              />
-              <ThemedText style={styles.todayStatisticValue}>
-                {value}
-              </ThemedText>
-              <ThemedText>{title}</ThemedText>
-            </View>
-          ))}
-        </View>
-        <LineChartComponent width={width} style={styles.weekChart} />
-        <Animated.View
-          style={{
-            transform: [{ translateY: animation }],
-          }}
+    <ThemedView>
+      <ProgressDayChart />
+      <View style={styles.todayStatistic}>
+        {todaysStatistic.map(({ icon, value, title }) => (
+          <View style={styles.todayStatisticItem} key={title}>
+            <FontAwesome5
+              name={icon}
+              iconStyle="solid"
+              size={24}
+              color={Colors.light.primary}
+            />
+            <ThemedText style={styles.todayStatisticValue}>{value}</ThemedText>
+            <ThemedText>{title}</ThemedText>
+          </View>
+        ))}
+      </View>
+      <LineChartComponent width={width} style={styles.weekChart} />
+      <Animated.View
+        style={{
+          transform: [{ translateY: animation }],
+        }}
+      >
+        <LinearGradient
+          style={styles.tipWrapper}
+          colors={[Colors.light.gradientTo, Colors.light.gradientFrom]}
         >
-          <LinearGradient
-            style={styles.tipWrapper}
-            colors={[Colors.light.gradientTo, Colors.light.gradientFrom]}
-          >
-            <View style={styles.tipOfTheDay}>
-              {tipOfTheDayText.map((text, i) => (
-                <ThemedText style={styles.tipText} key={i}>
-                  {text}
-                </ThemedText>
-              ))}
-            </View>
-          </LinearGradient>
-        </Animated.View>
-      </ThemedView>
-    </View>
+          <View style={styles.tipOfTheDay}>
+            {tipOfTheDayText.map((text, i) => (
+              <ThemedText style={styles.tipText} key={i}>
+                {text}
+              </ThemedText>
+            ))}
+          </View>
+        </LinearGradient>
+      </Animated.View>
+    </ThemedView>
   );
 }
 
