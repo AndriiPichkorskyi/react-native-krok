@@ -1,6 +1,6 @@
 # Ігноруємо нативні директорії (Android / iOS)
-ios/* linguist-vendored
-android/* linguist-vendored
+ios/** linguist-vendored
+android/** linguist-vendored
 
 # Ігноруємо автогенеровані build-файли
 *.pbxproj linguist-vendored
